@@ -1,0 +1,977 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NextGen Connect | Digital Agency & Network Infrastructure</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brandDark: '#0f172a',
+                        brandCard: '#1e293b',
+                        brandGreen: '#00ff66',
+                        brandCyan: '#00ffff',
+                        brandRed: '#ff3333'
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'Segoe UI', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0f172a;
+            color: #f8fafc;
+            overflow-x: hidden;
+        }
+
+        /* Glassmorphism utility */
+        .glass {
+            background: rgba(30, 41, 59, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .glass-nav {
+            background: rgba(15, 23, 42, 0.85);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        /* Glow Effects */
+        .glow-cyan {
+            box-shadow: 0 0 20px rgba(0, 255, 255, 0.25);
+        }
+
+        .glow-green {
+            box-shadow: 0 0 20px rgba(0, 255, 102, 0.25);
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0f172a;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #1e293b;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #00ffff;
+        }
+
+        /* Gradient Text */
+        .gradient-text {
+            background: linear-gradient(135deg, #00ffff 0%, #00ff66 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .gradient-text-red {
+            background: linear-gradient(135deg, #ff3333 0%, #ffcc00 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Modal backdrop animation */
+        .modal-fade {
+            transition: opacity 0.3s ease-in-out;
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- NAVIGATION BAR -->
+    <header class="fixed top-0 left-0 right-0 z-50 glass-nav transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                <!-- Brand Logo -->
+                <a href="#hero" class="flex items-center gap-3 group">
+                    <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-brandCyan to-brandGreen flex items-center justify-center text-black font-extrabold text-xl shadow-lg transition-transform group-hover:scale-105">
+                        N
+                    </div>
+                    <div>
+                        <span class="text-xl font-black tracking-wider text-white">NEXTGEN</span>
+                        <span class="text-xl font-light text-brandGreen tracking-widest">CONNECT</span>
+                    </div>
+                </a>
+
+                <!-- Desktop Navigation Menu -->
+                <nav class="hidden md:flex items-center space-x-8 font-medium text-sm">
+                    <a href="#services" class="text-slate-300 hover:text-brandCyan transition-colors">Services</a>
+                    <a href="#captive-portal-demo" class="text-slate-300 hover:text-brandGreen transition-colors flex items-center gap-1.5">
+                        <span class="w-2 h-2 rounded-full bg-brandGreen animate-pulse"></span>
+                        Live Portal Demo
+                    </a>
+                    <a href="#calculator" class="text-slate-300 hover:text-brandCyan transition-colors">Estimator</a>
+                    <a href="#portfolio" class="text-slate-300 hover:text-brandCyan transition-colors">Showcase</a>
+                    <a href="#blog" class="text-slate-300 hover:text-brandCyan transition-colors">Tech Blog</a>
+                    <a href="#contact" class="text-slate-300 hover:text-brandCyan transition-colors">Contact</a>
+                </nav>
+
+                <!-- CTA Button -->
+                <div class="hidden md:flex items-center gap-4">
+                    <a href="#contact" class="px-5 py-2.5 rounded-lg bg-gradient-to-r from-brandCyan to-brandGreen text-slate-950 font-bold text-sm hover:opacity-90 transition-all transform hover:-translate-y-0.5 shadow-lg">
+                        Get Started
+                    </a>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <div class="md:hidden flex items-center">
+                    <button id="mobile-menu-btn" type="button" class="text-slate-300 hover:text-white focus:outline-none p-2">
+                        <i class="fa-solid fa-bars text-2xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Drawer -->
+        <div id="mobile-menu" class="hidden md:hidden glass border-t border-slate-800 px-4 pt-4 pb-6 space-y-3">
+            <a href="#services" class="mobile-link block px-3 py-2 rounded-md text-base font-medium text-slate-200 hover:bg-slate-800">Services</a>
+            <a href="#captive-portal-demo" class="mobile-link block px-3 py-2 rounded-md text-base font-medium text-brandGreen hover:bg-slate-800">Live Captive Portal Demo</a>
+            <a href="#calculator" class="mobile-link block px-3 py-2 rounded-md text-base font-medium text-slate-200 hover:bg-slate-800">Pricing Estimator</a>
+            <a href="#portfolio" class="mobile-link block px-3 py-2 rounded-md text-base font-medium text-slate-200 hover:bg-slate-800">Showcase</a>
+            <a href="#blog" class="mobile-link block px-3 py-2 rounded-md text-base font-medium text-slate-200 hover:bg-slate-800">Tech Blog</a>
+            <a href="#contact" class="mobile-link block px-3 py-2 rounded-md text-base font-medium text-slate-200 hover:bg-slate-800">Contact Us</a>
+        </div>
+    </header>
+
+    <!-- HERO SECTION -->
+    <section id="hero" class="relative pt-32 pb-20 md:pt-44 md:pb-32 overflow-hidden">
+        <!-- Ambient Glowing Orbs -->
+        <div class="absolute top-1/4 left-10 w-96 h-96 bg-brandCyan/10 rounded-full blur-3xl pointer-events-none"></div>
+        <div class="absolute bottom-10 right-10 w-96 h-96 bg-brandGreen/10 rounded-full blur-3xl pointer-events-none"></div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                <!-- Hero Content -->
+                <div class="lg:col-span-7 space-y-6 text-center lg:text-left">
+                    <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full glass border border-brandCyan/30 text-brandCyan text-xs font-semibold tracking-wide uppercase">
+                        <i class="fa-solid fa-bolt text-brandGreen"></i> NextGen Digital Services Agency
+                    </div>
+
+                    <h1 class="text-4xl sm:text-5xl lg:text-6xl font-black text-white leading-tight">
+                        Powering Enterprise <span class="gradient-text">Networks</span> & Modern <span class="gradient-text">Web Apps</span>
+                    </h1>
+
+                    <p class="text-slate-400 text-lg sm:text-xl max-w-2xl mx-auto lg:mx-0 leading-relaxed">
+                        We build high-converting websites, deploy automated MikroTik Wi-Fi captive portals with M-Pesa STK Push payment integrations, and deliver top-tier hardware diagnostics.
+                    </p>
+
+                    <div class="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 pt-4">
+                        <a href="#captive-portal-demo" class="w-full sm:w-auto px-8 py-4 rounded-xl bg-gradient-to-r from-brandCyan to-brandGreen text-slate-950 font-extrabold text-center hover:shadow-lg hover:shadow-brandCyan/20 transition-all transform hover:-translate-y-1">
+                            <i class="fa-solid fa-wifi mr-2"></i> Launch Wi-Fi Portal Demo
+                        </a>
+                        <a href="#calculator" class="w-full sm:w-auto px-8 py-4 rounded-xl glass border border-slate-700 text-white font-bold text-center hover:bg-slate-800/80 transition-all">
+                            <i class="fa-solid fa-calculator mr-2 text-brandCyan"></i> Calculate Estimate
+                        </a>
+                    </div>
+
+                    <!-- Metrics Badge Grid -->
+                    <div class="grid grid-cols-3 gap-4 pt-8 border-t border-slate-800 max-w-lg mx-auto lg:mx-0">
+                        <div>
+                            <div class="text-2xl font-black text-brandCyan">99.9%</div>
+                            <div class="text-xs text-slate-400">Portal Uptime</div>
+                        </div>
+                        <div>
+                            <div class="text-2xl font-black text-brandGreen">&lt; 3s</div>
+                            <div class="text-xs text-slate-400">M-Pesa STK Push</div>
+                        </div>
+                        <div>
+                            <div class="text-2xl font-black text-white">13+</div>
+                            <div class="text-xs text-slate-400">Tier Plans</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Hero Graphic Card / Visual -->
+                <div class="lg:col-span-5">
+                    <div class="relative glass rounded-2xl p-6 border border-slate-700 shadow-2xl">
+                        <!-- Server Status Header -->
+                        <div class="flex items-center justify-between pb-4 mb-4 border-b border-slate-700">
+                            <div class="flex items-center gap-2">
+                                <span class="w-3 h-3 rounded-full bg-brandGreen animate-pulse"></span>
+                                <span class="text-xs font-mono text-slate-300">SYSTEM_ONLINE // MIKROTIK_GATEWAY</span>
+                            </div>
+                            <span class="text-xs font-mono text-brandCyan">v3.4.2</span>
+                        </div>
+
+                        <!-- Mini Visual Terminal/Console -->
+                        <div class="bg-slate-950 rounded-xl p-4 font-mono text-xs text-slate-300 space-y-2 mb-4 border border-slate-800">
+                            <div class="text-slate-500">// Real-time RouterOS API Handshake</div>
+                            <div><span class="text-brandCyan">[CONNECT]</span> Router: MikroTik hAP ac²</div>
+                            <div><span class="text-brandGreen">[AUTH_OK]</span> STK Push Endpoint Ready</div>
+                            <div><span class="text-yellow-400">[QUEUE]</span> Limit default: MAX 5 Mbps</div>
+                            <div><span class="text-brandGreen">[READY]</span> Waiting for incoming payment callback...</div>
+                        </div>
+
+                        <!-- Card Quick Features -->
+                        <div class="space-y-3">
+                            <div class="p-3 rounded-lg bg-slate-800/50 flex items-center justify-between border border-slate-700">
+                                <div class="flex items-center gap-3">
+                                    <div class="p-2 bg-brandCyan/10 text-brandCyan rounded-lg">
+                                        <i class="fa-solid fa-microchip"></i>
+                                    </div>
+                                    <div>
+                                        <div class="text-sm font-semibold text-white">MikroTik RouterOS Integration</div>
+                                        <div class="text-xs text-slate-400">Bouncer & Speed Management</div>
+                                    </div>
+                                </div>
+                                <span class="text-xs text-brandGreen font-semibold">Active</span>
+                            </div>
+
+                            <div class="p-3 rounded-lg bg-slate-800/50 flex items-center justify-between border border-slate-700">
+                                <div class="flex items-center gap-3">
+                                    <div class="p-2 bg-brandGreen/10 text-brandGreen rounded-lg">
+                                        <i class="fa-solid fa-mobile-screen-button"></i>
+                                    </div>
+                                    <div>
+                                        <div class="text-sm font-semibold text-white">Safaricom Daraja API</div>
+                                        <div class="text-xs text-slate-400">Automated Cashier Callback</div>
+                                    </div>
+                                </div>
+                                <span class="text-xs text-brandGreen font-semibold">Instant</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SERVICES SECTION -->
+    <section id="services" class="py-20 bg-slate-900/50 border-y border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <h2 class="text-xs font-extrabold uppercase tracking-widest text-brandCyan mb-2">Core Competencies</h2>
+                <p class="text-3xl sm:text-4xl font-extrabold text-white">Comprehensive Technical Services</p>
+                <p class="text-slate-400 mt-4 text-base">From full-stack custom web engineering to network hardware deployment and automated Wi-Fi monetization.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Service 1: Wi-Fi Hotspot -->
+                <div class="glass p-8 rounded-2xl border border-slate-700 hover:border-brandGreen transition-all group hover:-translate-y-2">
+                    <div class="w-14 h-14 rounded-xl bg-brandGreen/10 text-brandGreen flex items-center justify-center text-2xl mb-6 group-hover:bg-brandGreen group-hover:text-black transition-colors">
+                        <i class="fa-solid fa-wifi"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-3">Captive Portal & Hotspot Systems</h3>
+                    <p class="text-slate-400 text-sm leading-relaxed mb-6">
+                        Complete turn-key Wi-Fi vending systems using MikroTik routers paired with Node.js backends. Built-in M-Pesa STK push for automated customer payment and internet access.
+                    </p>
+                    <ul class="text-xs text-slate-300 space-y-2 font-mono">
+                        <li><i class="fa-solid fa-check text-brandGreen mr-2"></i>Walled Garden Domain Rules</li>
+                        <li><i class="fa-solid fa-check text-brandGreen mr-2"></i>Automatic Speed Caps (5Mbps)</li>
+                        <li><i class="fa-solid fa-check text-brandGreen mr-2"></i>Multi-Tier Duration Packages</li>
+                    </ul>
+                </div>
+
+                <!-- Service 2: Web Dev -->
+                <div class="glass p-8 rounded-2xl border border-slate-700 hover:border-brandCyan transition-all group hover:-translate-y-2">
+                    <div class="w-14 h-14 rounded-xl bg-brandCyan/10 text-brandCyan flex items-center justify-center text-2xl mb-6 group-hover:bg-brandCyan group-hover:text-black transition-colors">
+                        <i class="fa-solid fa-code"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-3">Custom Web Development</h3>
+                    <p class="text-slate-400 text-sm leading-relaxed mb-6">
+                        Ultra-responsive web applications, agency portfolios, and SaaS dashboards built with Tailwind CSS, React, and Node.js RESTful APIs. Optimally engineered for high performance.
+                    </p>
+                    <ul class="text-xs text-slate-300 space-y-2 font-mono">
+                        <li><i class="fa-solid fa-check text-brandCyan mr-2"></i>Mobile-First Responsive Layouts</li>
+                        <li><i class="fa-solid fa-check text-brandCyan mr-2"></i>Express & Node.js API Integration</li>
+                        <li><i class="fa-solid fa-check text-brandCyan mr-2"></i>SEO & Speed Optimizations</li>
+                    </ul>
+                </div>
+
+                <!-- Service 3: IT Hardware -->
+                <div class="glass p-8 rounded-2xl border border-slate-700 hover:border-purple-400 transition-all group hover:-translate-y-2">
+                    <div class="w-14 h-14 rounded-xl bg-purple-500/10 text-purple-400 flex items-center justify-center text-2xl mb-6 group-hover:bg-purple-400 group-hover:text-black transition-colors">
+                        <i class="fa-solid fa-screwdriver-wrench"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-3">Hardware Repair & Networking</h3>
+                    <p class="text-slate-400 text-sm leading-relaxed mb-6">
+                        Professional diagnostics and maintenance for servers, workstations, and local network setups. Structured Ethernet cabling, router flash configurations, and component upgrades.
+                    </p>
+                    <ul class="text-xs text-slate-300 space-y-2 font-mono">
+                        <li><i class="fa-solid fa-check text-purple-400 mr-2"></i>MikroTik & AP Setup</li>
+                        <li><i class="fa-solid fa-check text-purple-400 mr-2"></i>SSD Upgrades & OS Recovery</li>
+                        <li><i class="fa-solid fa-check text-purple-400 mr-2"></i>Network Security Hardening</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- INTERACTIVE CAPTIVE PORTAL LIVE DEMO SECTION -->
+    <section id="captive-portal-demo" class="py-20 relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-12">
+                <span class="px-3 py-1 rounded-full bg-brandGreen/10 text-brandGreen text-xs font-mono uppercase tracking-wider">Interactive Playground</span>
+                <h2 class="text-3xl sm:text-4xl font-extrabold text-white mt-3">Try Our Wi-Fi Captive Portal Demo</h2>
+                <p class="text-slate-400 mt-2 text-sm">Experience the exact login interface your customers will see on their smartphones when connecting to your network.</p>
+            </div>
+
+            <!-- Portal Frame Simulation Wrapper -->
+            <div class="max-w-md mx-auto">
+                <div class="bg-black rounded-3xl p-4 shadow-2xl border-4 border-slate-800 relative">
+                    <!-- Phone Notch -->
+                    <div class="w-32 h-4 bg-slate-800 rounded-b-xl mx-auto mb-3"></div>
+
+                    <!-- Portal Inner Screen -->
+                    <div class="rounded-2xl p-4 bg-gradient-to-b from-slate-900 to-black border border-slate-800 text-center relative overflow-hidden">
+                        
+                        <!-- Header / Title -->
+                        <div class="mb-4">
+                            <h3 class="text-lg font-black text-brandCyan tracking-wider uppercase">COWNDOWN WIFI LOGIN</h3>
+                            <p class="text-xs text-brandGreen italic mt-0.5">😎 chill, relax & enjoy the vibe 🌴</p>
+                        </div>
+
+                        <!-- Instructions Box -->
+                        <div class="bg-slate-800/60 p-3 rounded-lg text-left text-xs mb-4 border-l-4 border-brandRed">
+                            <span class="font-bold text-white block mb-1">How To Purchase:</span>
+                            <ol class="list-decimal pl-4 text-slate-300 space-y-0.5">
+                                <li>Tap on your preferred package below.</li>
+                                <li>Enter your M-Pesa phone number.</li>
+                                <li>Click "PAY NOW" and enter your PIN.</li>
+                            </ol>
+                        </div>
+
+                        <!-- 13 Package Grid -->
+                        <div class="grid grid-cols-4 gap-1.5 mb-4 text-left" id="portal-packages">
+                            <!-- JS dynamically loads packages -->
+                        </div>
+
+                        <!-- Monthly Banner Special Package -->
+                        <div class="package-btn mb-4 p-2 rounded border-2 border-brandRed bg-slate-950 cursor-pointer text-center hover:bg-slate-900 transition-all" data-name="monthly" data-price="500">
+                            <div class="text-xs font-bold text-brandGreen">MONTHLY VIP PASS</div>
+                            <div class="text-xs font-extrabold text-brandRed">KSH: 500/-</div>
+                            <div class="text-[9px] text-slate-400">MAX 5Mbps Cap • 30 Days Access</div>
+                        </div>
+
+                        <!-- Form / Selection Info -->
+                        <div class="space-y-3 bg-slate-900/80 p-3 rounded-xl border border-slate-800">
+                            <p id="portal-selected-info" class="text-xs text-yellow-400 font-medium">Please select a package above</p>
+
+                            <div class="space-y-2">
+                                <input type="tel" id="portal-phone" placeholder="07XXXXXXXX or 01XXXXXXXX" maxlength="10" 
+                                    class="w-full px-3 py-2 rounded-lg bg-slate-950 border border-slate-700 text-white text-xs placeholder-slate-500 focus:outline-none focus:border-brandGreen transition-colors text-center font-mono">
+                                
+                                <button id="portal-pay-btn" disabled 
+                                    class="w-full py-2.5 rounded-lg bg-brandGreen text-black font-extrabold text-xs uppercase tracking-wider disabled:opacity-40 disabled:cursor-not-allowed hover:bg-green-400 transition-all">
+                                    PAY NOW WITH M-PESA
+                                </button>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PRICING CALCULATOR / ESTIMATOR SECTION -->
+    <section id="calculator" class="py-20 bg-slate-900/40 border-y border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <span class="text-xs font-extrabold uppercase tracking-widest text-brandCyan">Instant Quote Generator</span>
+                <h2 class="text-3xl sm:text-4xl font-extrabold text-white mt-2">Interactive Service Estimator</h2>
+                <p class="text-slate-400 mt-3 text-sm">Configure your exact technical requirements below to calculate an instant cost estimate for your project in KES.</p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+                <!-- Selection Panel -->
+                <div class="lg:col-span-7 space-y-6">
+                    <div class="glass p-6 rounded-2xl border border-slate-800 space-y-6">
+                        <h3 class="text-lg font-bold text-white border-b border-slate-700 pb-3">Select Required Services</h3>
+
+                        <!-- Checkboxes for Services -->
+                        <div class="space-y-3">
+                            <label class="calc-option flex items-start gap-4 p-4 rounded-xl bg-slate-800/40 border border-slate-700 cursor-pointer hover:border-brandCyan transition-colors">
+                                <input type="checkbox" value="15000" data-name="Custom Web Application" class="mt-1 w-4 h-4 text-brandCyan rounded focus:ring-0 bg-slate-900 border-slate-700">
+                                <div class="flex-1">
+                                    <div class="flex justify-between font-bold text-white text-sm">
+                                        <span>Custom Web Application / Portfolio</span>
+                                        <span class="text-brandCyan">KSh 15,000</span>
+                                    </div>
+                                    <p class="text-xs text-slate-400 mt-1">Responsive HTML/CSS/JS frontend with dynamic backend API integration.</p>
+                                </div>
+                            </label>
+
+                            <label class="calc-option flex items-start gap-4 p-4 rounded-xl bg-slate-800/40 border border-slate-700 cursor-pointer hover:border-brandGreen transition-colors">
+                                <input type="checkbox" value="12000" data-name="MikroTik Captive Portal Setup" class="mt-1 w-4 h-4 text-brandGreen rounded focus:ring-0 bg-slate-900 border-slate-700">
+                                <div class="flex-1">
+                                    <div class="flex justify-between font-bold text-white text-sm">
+                                        <span>MikroTik Hotspot + M-Pesa Engine</span>
+                                        <span class="text-brandGreen">KSh 12,000</span>
+                                    </div>
+                                    <p class="text-xs text-slate-400 mt-1">Router OS setup, Walled Garden configuration, and Node.js backend integration.</p>
+                                </div>
+                            </label>
+
+                            <label class="calc-option flex items-start gap-4 p-4 rounded-xl bg-slate-800/40 border border-slate-700 cursor-pointer hover:border-brandCyan transition-colors">
+                                <input type="checkbox" value="4500" data-name="Router Hardware & AP Installation" class="mt-1 w-4 h-4 text-brandCyan rounded focus:ring-0 bg-slate-900 border-slate-700">
+                                <div class="flex-1">
+                                    <div class="flex justify-between font-bold text-white text-sm">
+                                        <span>Access Point Deployment & Cabling</span>
+                                        <span class="text-brandCyan">KSh 4,500</span>
+                                    </div>
+                                    <p class="text-xs text-slate-400 mt-1">Physical Ethernet mounting, Access Point tuning, and signal coverage setup.</p>
+                                </div>
+                            </label>
+
+                            <label class="calc-option flex items-start gap-4 p-4 rounded-xl bg-slate-800/40 border border-slate-700 cursor-pointer hover:border-purple-400 transition-colors">
+                                <input type="checkbox" value="3500" data-name="Hardware Diagnostics & OS Recovery" class="mt-1 w-4 h-4 text-purple-400 rounded focus:ring-0 bg-slate-900 border-slate-700">
+                                <div class="flex-1">
+                                    <div class="flex justify-between font-bold text-white text-sm">
+                                        <span>PC Hardware Repair & OS Clean Install</span>
+                                        <span class="text-purple-400">KSh 3,500</span>
+                                    </div>
+                                    <p class="text-xs text-slate-400 mt-1">Diagnostic check, SSD upgrading, driver fixes, and operating system re-installation.</p>
+                                </div>
+                            </label>
+                        </div>
+
+                        <!-- Maintenance Addon -->
+                        <div class="pt-4 border-t border-slate-700">
+                            <label class="block text-xs font-semibold text-slate-300 mb-2">Monthly System Maintenance Support</label>
+                            <select id="calc-maintenance" class="w-full p-3 rounded-xl bg-slate-900 border border-slate-700 text-white text-sm focus:outline-none focus:border-brandCyan">
+                                <option value="0">No Monthly Maintenance Plan</option>
+                                <option value="2500">Standard Remote Support (+ KSh 2,500/mo)</option>
+                                <option value="5000">Priority 24/7 Monitoring & Hotspot Guard (+ KSh 5,000/mo)</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Total Summary Card -->
+                <div class="lg:col-span-5">
+                    <div class="glass p-6 rounded-2xl border border-brandCyan/40 sticky top-28 space-y-6">
+                        <h3 class="text-lg font-bold text-white flex items-center justify-between">
+                            <span>Project Breakdown</span>
+                            <span class="text-xs font-mono text-brandCyan">ESTIMATE</span>
+                        </h3>
+
+                        <div id="calc-summary-list" class="space-y-3 min-h-[140px] text-xs text-slate-300">
+                            <p class="text-slate-500 italic">Select one or more services on the left to build your quote breakdown.</p>
+                        </div>
+
+                        <div class="pt-4 border-t border-slate-700">
+                            <div class="flex justify-between items-baseline mb-2">
+                                <span class="text-sm text-slate-400">Estimated Total:</span>
+                                <span id="calc-total" class="text-3xl font-black text-brandGreen">KSh 0</span>
+                            </div>
+                            <p class="text-[11px] text-slate-500">Final price may vary based on custom hardware specs and site location.</p>
+                        </div>
+
+                        <button onclick="requestCalculatedQuote()" class="w-full py-3.5 rounded-xl bg-gradient-to-r from-brandCyan to-brandGreen text-slate-950 font-extrabold text-sm hover:opacity-90 transition-all shadow-lg">
+                            Request Quote With This Breakdown
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PORTFOLIO SHOWCASE SECTION -->
+    <section id="portfolio" class="py-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <span class="text-xs font-extrabold uppercase tracking-widest text-brandGreen">Proven Work</span>
+                <h2 class="text-3xl sm:text-4xl font-extrabold text-white mt-2">Projects & Deployments</h2>
+                <p class="text-slate-400 mt-3 text-sm">Explore examples of completed technical solutions and Wi-Fi infrastructure setups.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Portfolio item 1 -->
+                <div class="glass rounded-2xl overflow-hidden border border-slate-800 hover:border-slate-700 transition-all">
+                    <div class="h-48 bg-slate-950 relative flex items-center justify-center p-6 border-b border-slate-800">
+                        <div class="text-center">
+                            <i class="fa-solid fa-wifi text-5xl text-brandGreen mb-3"></i>
+                            <div class="text-xs font-mono text-slate-400">MikroTik hAP ac² + Node.js</div>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <span class="text-[10px] font-bold text-brandGreen uppercase tracking-widest">Wi-Fi Vending</span>
+                        <h3 class="text-lg font-bold text-white mt-1">Residential Plot Wi-Fi Zone</h3>
+                        <p class="text-xs text-slate-400 mt-2 leading-relaxed">
+                            Deployed automated hotspot handling 120+ active daily users with 13 custom package tiers and real-time M-Pesa verification.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Portfolio item 2 -->
+                <div class="glass rounded-2xl overflow-hidden border border-slate-800 hover:border-slate-700 transition-all">
+                    <div class="h-48 bg-slate-950 relative flex items-center justify-center p-6 border-b border-slate-800">
+                        <div class="text-center">
+                            <i class="fa-solid fa-shop text-5xl text-brandCyan mb-3"></i>
+                            <div class="text-xs font-mono text-slate-400">Tailwind CSS + Express API</div>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <span class="text-[10px] font-bold text-brandCyan uppercase tracking-widest">Web Application</span>
+                        <h3 class="text-lg font-bold text-white mt-1">Local Merchant Web Portal</h3>
+                        <p class="text-xs text-slate-400 mt-2 leading-relaxed">
+                            Designed and built a mobile-first digital product showcase allowing clients to place orders and submit requests automatically via WhatsApp.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Portfolio item 3 -->
+                <div class="glass rounded-2xl overflow-hidden border border-slate-800 hover:border-slate-700 transition-all">
+                    <div class="h-48 bg-slate-950 relative flex items-center justify-center p-6 border-b border-slate-800">
+                        <div class="text-center">
+                            <i class="fa-solid fa-network-wired text-5xl text-purple-400 mb-3"></i>
+                            <div class="text-xs font-mono text-slate-400">Structured Cabling & RouterOS</div>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <span class="text-[10px] font-bold text-purple-400 uppercase tracking-widest">Networking</span>
+                        <h3 class="text-lg font-bold text-white mt-1">Office LAN & Firewall Hardening</h3>
+                        <p class="text-xs text-slate-400 mt-2 leading-relaxed">
+                            Configured dedicated VLANs, custom firewall filtering chains, and redundant access points for a multi-department office setup.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- TECH INSIGHTS / BLOG SECTION -->
+    <section id="blog" class="py-20 bg-slate-900/40 border-y border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
+                <div>
+                    <span class="text-xs font-extrabold uppercase tracking-widest text-brandCyan">Knowledge Base</span>
+                    <h2 class="text-3xl sm:text-4xl font-extrabold text-white mt-2">Tech Insights & Guides</h2>
+                    <p class="text-slate-400 mt-2 text-sm">Tutorials and technical breakdowns on MikroTik, M-Pesa integration, and web development.</p>
+                </div>
+
+                <!-- Search and Filter Bar -->
+                <div class="space-y-3 md:w-96">
+                    <div class="relative">
+                        <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-3 text-slate-500 text-xs"></i>
+                        <input type="text" id="blog-search" placeholder="Search articles..." 
+                            class="w-full pl-9 pr-4 py-2.5 rounded-xl bg-slate-900 border border-slate-700 text-white text-xs focus:outline-none focus:border-brandCyan">
+                    </div>
+                    <div class="flex gap-2 text-xs overflow-x-auto pb-1" id="blog-categories">
+                        <button data-cat="all" class="cat-btn px-3 py-1 rounded-full bg-brandCyan text-slate-950 font-bold">All</button>
+                        <button data-cat="networking" class="cat-btn px-3 py-1 rounded-full bg-slate-800 text-slate-300 hover:text-white">Networking</button>
+                        <button data-cat="webdev" class="cat-btn px-3 py-1 rounded-full bg-slate-800 text-slate-300 hover:text-white">Web Dev</button>
+                        <button data-cat="hardware" class="cat-btn px-3 py-1 rounded-full bg-slate-800 text-slate-300 hover:text-white">Hardware</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Blog Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8" id="blog-posts-container">
+                <!-- Rendered dynamically by JS -->
+            </div>
+        </div>
+    </section>
+
+    <!-- CONTACT SECTION -->
+    <section id="contact" class="py-20 relative">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="glass p-8 sm:p-12 rounded-3xl border border-slate-700 relative overflow-hidden shadow-2xl">
+                <div class="text-center mb-10">
+                    <span class="text-xs font-extrabold uppercase tracking-widest text-brandGreen">Get In Touch</span>
+                    <h2 class="text-3xl font-extrabold text-white mt-2">Let's Build Your Next Digital System</h2>
+                    <p class="text-slate-400 text-sm mt-2">Have questions about Wi-Fi portal setups or web development projects? Send us a direct inquiry.</p>
+                </div>
+
+                <form id="contact-form" onsubmit="handleContactSubmit(event)" class="space-y-6">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                        <div>
+                            <label class="block text-xs font-medium text-slate-300 mb-2">Full Name *</label>
+                            <input type="text" id="contact-name" required placeholder="e.g. Alex Omwamba" 
+                                class="w-full px-4 py-3 rounded-xl bg-slate-900 border border-slate-700 text-white text-sm focus:outline-none focus:border-brandGreen">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-medium text-slate-300 mb-2">Phone or Email *</label>
+                            <input type="text" id="contact-detail" required placeholder="07XXXXXXXX or name@domain.com" 
+                                class="w-full px-4 py-3 rounded-xl bg-slate-900 border border-slate-700 text-white text-sm focus:outline-none focus:border-brandGreen">
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-medium text-slate-300 mb-2">Service Required</label>
+                        <select id="contact-service" class="w-full px-4 py-3 rounded-xl bg-slate-900 border border-slate-700 text-white text-sm focus:outline-none focus:border-brandGreen">
+                            <option value="Captive Portal / Wi-Fi Hotspot">Captive Portal / Wi-Fi Hotspot</option>
+                            <option value="Custom Web Development">Custom Web Development</option>
+                            <option value="Hardware Repair & Network Setup">Hardware Repair & Network Setup</option>
+                            <option value="General Technical Inquiry">General Technical Inquiry</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-medium text-slate-300 mb-2">Project Details / Message *</label>
+                        <textarea id="contact-message" required rows="4" placeholder="Tell us about your requirements..." 
+                            class="w-full px-4 py-3 rounded-xl bg-slate-900 border border-slate-700 text-white text-sm focus:outline-none focus:border-brandGreen resize-none"></textarea>
+                    </div>
+
+                    <div class="flex flex-col sm:flex-row items-center gap-4">
+                        <button type="submit" class="w-full sm:flex-1 py-4 rounded-xl bg-gradient-to-r from-brandCyan to-brandGreen text-slate-950 font-extrabold text-sm hover:opacity-90 transition-all shadow-lg">
+                            <i class="fa-solid fa-paper-plane mr-2"></i> Send Message
+                        </button>
+                        
+                        <a id="whatsapp-direct-btn" href="#" target="_blank" class="w-full sm:w-auto px-6 py-4 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-sm text-center transition-colors flex items-center justify-center gap-2">
+                            <i class="fa-brands fa-whatsapp text-lg"></i> Direct WhatsApp
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="py-10 border-t border-slate-800 text-center text-slate-500 text-xs">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-4">
+            <div class="flex justify-center items-center gap-2">
+                <div class="w-6 h-6 rounded-lg bg-gradient-to-tr from-brandCyan to-brandGreen flex items-center justify-center text-black font-extrabold text-xs">N</div>
+                <span class="text-sm font-bold text-white tracking-wider">NEXTGEN CONNECT</span>
+            </div>
+            <p>Empowering Digital Business with Modern Networks & Full-Stack Solutions.</p>
+            <p>&copy; 2026 NextGen Connect. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- ARTICLE READER MODAL -->
+    <div id="blog-modal" class="fixed inset-0 z-50 hidden modal-fade bg-black/80 backdrop-blur-md flex items-center justify-center p-4">
+        <div class="glass max-w-2xl w-full max-h-[85vh] rounded-3xl border border-slate-700 flex flex-col overflow-hidden">
+            <div class="p-6 border-b border-slate-800 flex justify-between items-center">
+                <span id="modal-cat" class="text-xs font-mono text-brandCyan uppercase">Category</span>
+                <button onclick="closeBlogModal()" class="text-slate-400 hover:text-white text-xl">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+            <div class="p-6 overflow-y-auto space-y-4 text-slate-300 text-sm leading-relaxed" id="modal-body">
+                <!-- Dynamically filled -->
+            </div>
+        </div>
+    </div>
+
+    <!-- BACK TO TOP BUTTON -->
+    <button id="back-to-top" class="fixed bottom-6 right-6 w-12 h-12 rounded-full glass border border-slate-700 text-brandCyan flex items-center justify-center hidden hover:bg-slate-800 transition-all z-40">
+        <i class="fa-solid fa-arrow-up"></i>
+    </button>
+
+    <!-- JAVASCRIPT LOGIC ENGINE -->
+    <script>
+        // Data Store: 13 Wi-Fi Package Tiers
+        const wifiPackages = [
+            { name: "1 hour", price: 10 },
+            { name: "3 hours", price: 15 },
+            { name: "4 hours", price: 20 },
+            { name: "6 hours", price: 25 },
+            { name: "10 hours", price: 30 },
+            { name: "12 hours", price: 35 },
+            { name: "24 hours", price: 50 },
+            { name: "1 day", price: 50 },
+            { name: "2 days", price: 90 },
+            { name: "3 days", price: 120 },
+            { name: "weekly", price: 150, sub: "MAX 5mbps" },
+            { name: "2 weeks", price: 250, sub: "MAX 5mbps" }
+        ];
+
+        // Data Store: Articles
+        const articles = [
+            {
+                id: 1,
+                title: "Connecting MikroTik RouterOS with Node.js via API",
+                cat: "networking",
+                date: "June 2026",
+                summary: "Learn how to establish a secure persistent TCP API connection between your backend server and RouterOS to grant internet access.",
+                content: `
+                    <h3 class="text-lg font-bold text-white mb-2">Architectural Blueprint</h3>
+                    <p>The standard architecture for high-volume Wi-Fi vending pairs a dedicated RouterOS device (e.g. MikroTik hEX or hAP ac²) with an off-router backend written in Express/Node.js.</p>
+                    <p class="mt-2">When a payment confirmation callback arrives from Safaricom Daraja, the Node.js server connects directly to the RouterOS API port (default 8728) and executes:</p>
+                    <pre class="bg-slate-950 p-3 rounded-lg text-xs font-mono text-brandGreen mt-2">/ip/hotspot/active/login =user=MAC_ADDRESS =password=DEFAULT</pre>
+                    <p class="mt-2">This decouples authentication state from the captive portal landing page, maximizing security and resilience.</p>
+                `
+            },
+            {
+                id: 2,
+                title: "Optimizing Safaricom M-Pesa Daraja Callback Latency",
+                cat: "webdev",
+                date: "May 2026",
+                summary: "Best practices for building ultra-fast Express webhook listeners that handle M-Pesa STK Push callbacks reliably.",
+                content: `
+                    <h3 class="text-lg font-bold text-white mb-2">Handling Webhooks Efficiently</h3>
+                    <p>Safaricom's Daraja API expects a prompt 200 OK response from your callback server. If your server takes too long executing database operations or remote MikroTik API queries, the gateway may timeout and retry.</p>
+                    <p class="mt-2">Always acknowledge receipt of the payload immediately, then process user activation asynchronously using job queues or immediate event dispatchers.</p>
+                `
+            },
+            {
+                id: 3,
+                title: "Diagnosing & Fixing Laptop Boot & Storage Corruptions",
+                cat: "hardware",
+                date: "April 2026",
+                summary: "A practical guide to performing hardware diagnostics, repairing corrupted partition tables, and upgrading HDDs to high-speed NVMe SSDs.",
+                content: `
+                    <h3 class="text-lg font-bold text-white mb-2">Hardware Recovery Workflows</h3>
+                    <p>Slow boot times and BSOD crashes are frequently caused by failing mechanical hard drives. Upgrading to an SSD while keeping OS licensing intact requires careful disk cloning or fresh image deployment.</p>
+                `
+            }
+        ];
+
+        // Global State variables
+        let selectedPortalPackage = null;
+
+        // Initialize App on DOM Load
+        document.addEventListener('DOMContentLoaded', () => {
+            renderPortalPackages();
+            renderArticles(articles);
+            setupCalculator();
+            setupMobileMenu();
+            setupScrollHandlers();
+            setupWhatsAppButton();
+        });
+
+        // Render Captive Portal Package Buttons
+        function renderPortalPackages() {
+            const container = document.getElementById('portal-packages');
+            container.innerHTML = wifiPackages.map(pkg => `
+                <div class="package-card p-1.5 rounded border border-brandRed bg-slate-950 cursor-pointer text-center hover:bg-slate-900 transition-all select-none"
+                     data-name="${pkg.name}" data-price="${pkg.price}">
+                    <div class="text-[10px] font-bold text-brandGreen truncate">${pkg.name}</div>
+                    <div class="text-[10px] font-extrabold text-brandRed">KSH:${pkg.price}/-</div>
+                    ${pkg.sub ? `<div class="text-[8px] text-slate-400 font-mono">${pkg.sub}</div>` : ''}
+                </div>
+            `).join('');
+
+            // Add click events to package cards
+            document.querySelectorAll('.package-card, .package-btn').forEach(card => {
+                card.addEventListener('click', () => {
+                    document.querySelectorAll('.package-card, .package-btn').forEach(c => {
+                        c.classList.remove('border-brandGreen', 'bg-slate-800');
+                        c.classList.add('border-brandRed');
+                    });
+                    
+                    card.classList.remove('border-brandRed');
+                    card.classList.add('border-brandGreen', 'bg-slate-800');
+
+                    selectedPortalPackage = {
+                        name: card.getAttribute('data-name'),
+                        price: card.getAttribute('data-price')
+                    };
+
+                    document.getElementById('portal-selected-info').innerText = 
+                        `Selected: ${selectedPortalPackage.name.toUpperCase()} (KSH ${selectedPortalPackage.price}/-)`;
+                    
+                    validatePortalForm();
+                });
+            });
+
+            document.getElementById('portal-phone').addEventListener('input', validatePortalForm);
+            document.getElementById('portal-pay-btn').addEventListener('click', handlePortalPayment);
+        }
+
+        // Validate Captive Portal Phone Number
+        function validatePortalForm() {
+            const phone = document.getElementById('portal-phone').value.trim();
+            const btn = document.getElementById('portal-pay-btn');
+            const isValidPhone = /^(?:254|\+254|0)?([17]\d{8})$/.test(phone);
+
+            if (selectedPortalPackage && isValidPhone) {
+                btn.removeAttribute('disabled');
+            } else {
+                btn.setAttribute('disabled', 'true');
+            }
+        }
+
+        // Handle Captive Portal Demo Payment Simulation
+        function handlePortalPayment() {
+            const phone = document.getElementById('portal-phone').value.trim();
+            const btn = document.getElementById('portal-pay-btn');
+            
+            btn.setAttribute('disabled', 'true');
+            btn.innerHTML = `<i class="fa-solid fa-spinner animate-spin mr-1"></i> SENDING STK PUSH...`;
+
+            setTimeout(() => {
+                alert(`[STK PUSH SIMULATION]\n\nAn M-Pesa prompt for KSH ${selectedPortalPackage.price} has been sent to ${phone}.\n\nOnce PIN is entered, MikroTik API unlocks MAC session automatically!`);
+                btn.innerHTML = `PAY NOW WITH M-PESA`;
+                validatePortalForm();
+            }, 1500);
+        }
+
+        // Setup Interactive Cost Estimator
+        function setupCalculator() {
+            const options = document.querySelectorAll('.calc-option input');
+            const maintenance = document.getElementById('calc-maintenance');
+
+            function updateCalc() {
+                let total = 0;
+                let summaryHTML = '';
+
+                options.forEach(opt => {
+                    if (opt.checked) {
+                        const price = parseInt(opt.value);
+                        const name = opt.getAttribute('data-name');
+                        total += price;
+                        summaryHTML += `
+                            <div class="flex justify-between items-center py-1 border-b border-slate-800">
+                                <span>${name}</span>
+                                <span class="font-mono text-brandCyan">KSh ${price.toLocaleString()}</span>
+                            </div>
+                        `;
+                    }
+                });
+
+                const maintPrice = parseInt(maintenance.value);
+                if (maintPrice > 0) {
+                    total += maintPrice;
+                    const maintText = maintenance.options[maintenance.selectedIndex].text;
+                    summaryHTML += `
+                        <div class="flex justify-between items-center py-1 border-b border-slate-800 text-brandGreen">
+                            <span>${maintText.split('(')[0]}</span>
+                            <span class="font-mono">+ KSh ${maintPrice.toLocaleString()}</span>
+                        </div>
+                    `;
+                }
+
+                document.getElementById('calc-summary-list').innerHTML = summaryHTML || '<p class="text-slate-500 italic">Select one or more services on the left to build your quote breakdown.</p>';
+                document.getElementById('calc-total').innerText = `KSh ${total.toLocaleString()}`;
+            }
+
+            options.forEach(opt => opt.addEventListener('change', updateCalc));
+            maintenance.addEventListener('change', updateCalc);
+        }
+
+        function requestCalculatedQuote() {
+            const total = document.getElementById('calc-total').innerText;
+            if (total === 'KSh 0') {
+                alert('Please select at least one service option first.');
+                return;
+            }
+            
+            // Populate contact details and scroll
+            document.getElementById('contact-message').value = `Hello NextGen Connect,\nI used your online calculator and generated an estimate for: ${total}.\nPlease provide a formal project quote.`;
+            document.location.href = '#contact';
+        }
+
+        // Article Search & Category Filtering
+        function renderArticles(list) {
+            const container = document.getElementById('blog-posts-container');
+            if (list.length === 0) {
+                container.innerHTML = `<div class="col-span-3 text-center text-slate-500 py-8">No matching articles found.</div>`;
+                return;
+            }
+
+            container.innerHTML = list.map(item => `
+                <div class="glass rounded-2xl overflow-hidden border border-slate-800 flex flex-col justify-between">
+                    <div class="p-6">
+                        <div class="flex items-center justify-between text-xs mb-3">
+                            <span class="text-brandGreen font-mono uppercase">${item.cat}</span>
+                            <span class="text-slate-500">${item.date}</span>
+                        </div>
+                        <h3 class="text-lg font-bold text-white mb-2">${item.title}</h3>
+                        <p class="text-slate-400 text-xs leading-relaxed mb-4">${item.summary}</p>
+                    </div>
+                    <div class="p-6 pt-0">
+                        <button onclick="openBlogModal(${item.id})" class="text-xs font-bold text-brandCyan hover:text-white transition-colors flex items-center gap-1">
+                            Read Article <i class="fa-solid fa-arrow-right text-[10px]"></i>
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Search & Filter Events
+        document.getElementById('blog-search').addEventListener('input', (e) => {
+            const query = e.target.value.toLowerCase();
+            const filtered = articles.filter(a => a.title.toLowerCase().includes(query) || a.summary.toLowerCase().includes(query));
+            renderArticles(filtered);
+        });
+
+        document.querySelectorAll('.cat-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.cat-btn').forEach(b => {
+                    b.classList.remove('bg-brandCyan', 'text-slate-950', 'font-bold');
+                    b.classList.add('bg-slate-800', 'text-slate-300');
+                });
+                btn.classList.remove('bg-slate-800', 'text-slate-300');
+                btn.classList.add('bg-brandCyan', 'text-slate-950', 'font-bold');
+
+                const cat = btn.getAttribute('data-cat');
+                if (cat === 'all') {
+                    renderArticles(articles);
+                } else {
+                    renderArticles(articles.filter(a => a.cat === cat));
+                }
+            });
+        });
+
+        // Modal Controls
+        function openBlogModal(id) {
+            const article = articles.find(a => a.id === id);
+            if (!article) return;
+
+            document.getElementById('modal-cat').innerText = article.cat;
+            document.getElementById('modal-body').innerHTML = `
+                <h2 class="text-xl font-bold text-white mb-1">${article.title}</h2>
+                <div class="text-xs text-slate-500 mb-4">${article.date}</div>
+                ${article.content}
+            `;
+            document.getElementById('blog-modal').classList.remove('hidden');
+        }
+
+        function closeBlogModal() {
+            document.getElementById('blog-modal').classList.add('hidden');
+        }
+
+        // Contact Form Handling
+        function handleContactSubmit(e) {
+            e.preventDefault();
+            const name = document.getElementById('contact-name').value;
+            alert(`Thank you, ${name}! Your inquiry has been logged. Our technical team will reach out via email/phone shortly.`);
+            document.getElementById('contact-form').reset();
+        }
+
+        // Setup Direct WhatsApp Link
+        function setupWhatsAppButton() {
+            const btn = document.getElementById('whatsapp-direct-btn');
+            const defaultMessage = encodeURIComponent("Hello NextGen Connect, I am interested in your technical services.");
+            btn.href = `https://wa.me/254700000000?text=${defaultMessage}`;
+        }
+
+        // Mobile Menu Drawer
+        function setupMobileMenu() {
+            const btn = document.getElementById('mobile-menu-btn');
+            const menu = document.getElementById('mobile-menu');
+            btn.addEventListener('click', () => menu.classList.toggle('hidden'));
+            document.querySelectorAll('.mobile-link').forEach(link => {
+                link.addEventListener('click', () => menu.classList.add('hidden'));
+            });
+        }
+
+        // Back to Top & Scroll Listeners
+        function setupScrollHandlers() {
+            const btt = document.getElementById('back-to-top');
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 400) {
+                    btt.classList.remove('hidden');
+                } else {
+                    btt.classList.add('hidden');
+                }
+            });
+            btt.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+        }
+    </script>
+</body>
+</html>
